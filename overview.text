@@ -1,0 +1,139 @@
+1. ng g library core-lib
+
+2.ng-packagr in angular.json is basically building for library
+
+3.    "ng-packagr": "^13.0.0",  in package.json added
+
+4. projects/core-lib > public-api.ts -- is our entry point for our library
+
+5. projects/core-lib > ng-package.json
+ "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+
+6.ivy will disable in prod mode
+
+7.ng build core-lib (for development mode)
+
+8. ng build core-lib --prod (for production mode)
+
+
+9.//ng-package.json >> add assets (like css i added)  //added in ng 9 & above
+
+
+10.main-project >angular.json
+Styles[dist/core-lib/assets/style.scss]
+
+11. ng build core-lib --prod --watch
+
+12.
+Reusability with Angular Libraries
+A Library in Angular App is a reusable code that determines Angular components, services, or projects meant to be called by other projects. These projects are like a normal application. The only difference these have over Angular applications is that these projects cannot execute on their own. We need to import these projects to use them.
+
+We make libraries to solve some generic issues like the unified user interface or data presentation or data entry issues. Angular developers create these libraries for such general-purpose solutions. Later these libraries can be adapted in different applications for re-usage of the solution.
+
+An Angular Library can be built as an Angular application, later published as an npm package. These npm packages can be shared with different applications deploying the libraries.
+
+Libraries can be published as third-party libraries or Angular Team libraries.
+
+Some of the examples are:
+
+ReactiveFormsModule from the @angular/forms library is used to add reactive forms to an Angular app. We add this library package by using ng add @angular/forms and then importing the ReactiveFormsModule from the @angular/forms.
+To turn an Angular App into a progressive application we add the service worker library. This turns our code into a Progressive Web App (PWA).
+A very large and general-purpose library is the Angular Material. It is a library or a component that helps in constructing attractive, sophisticated, functional web app and reusable, and adaptable UI components.
+To advance your career in web development, enroll in learning Web Development course.
+
+
+13.
+Angular Libraries
+Angular libraries are built as a solution of general problems such as presenting a unified user interface, presenting data, and allowing data entry. Developers can create general solutions for particular domains that can be adapted for re-use in different apps. These solutions can be built as Angular libraries and these libraries can be published and shared as npm packages.
+
+An Angular library is an angular project but it is different from the Angular app in the terms that it cannot run on its own. It is imported and used in the app.
+
+Usage of Angular libraries
+Angular libraries extend Angular's base functionalities. For example, if you want to add reactive forms to an app, add the library package using ng add @angular/forms, then import the ReactiveFormsModule from the @angular/forms library in your application code.
+Angular Material is an example of a large, general-purpose library that provides sophisticated, reusable, and adaptable UI components.
+Installing libraries
+Libraries are published as npm packages and integrated with Angular CLI. To integrate reusable library code into an application, we have to install the package and import the provided functionality where we shall use it.
+
+Syntax
+ng add <lib_name>
+The ng add command uses the npm package manager to install the library package, and invokes schematics that are included in the package to other scaffolding within the project code, such as adding import statements, fonts, themes, and so on.
+
+Library typing
+Library packages include typings in .d.ts files. If your library's package does not include typings and IDE shows an error, you have to install the library's associated @types/ package.
+
+For example, suppose, you have a library named d1:
+
+npm install d1 --save
+npm install @types/d1 --save-dev
+Types defined in a @types/ package for a library installed into the workspace are automatically added to the TypeScript configuration for the project that uses that library. TypeScript looks for types in the node_modules/@types folder by default, so you don't have to add each type package individually.
+
+If a library doesn't contain typings at @types/, you can still use it by manually adding typings for it. You can do it by following:
+
+Create a typings.d.ts file in your src/ folder. This file is automatically included as global type definition.
+
+Add the following code in src/typings.d.ts.
+
+declare module 'host' {
+  export interface Host {
+    protocol?: string;
+    hostname?: string;
+    pathname?: string;
+  }
+  export function parse(url: string, queryString?: string): Host;
+}
+Add the following code in the component or file that uses the library:
+
+import * as host from 'host';
+const parsedUrl = host.parse('https://angular.io');
+console.log(parsedUrl.hostname);
+Updating libraries
+You can update the libraries by using ng update command. It updates individual library versions. The Angular CLI checks the latest published release of the library, and if it finds that the latest version is newer than your installed version, downloads it and updates your package.json to match the latest version.
+
+
+Syntax
+ng update <lib_name>
+Note: When you update Angular to a new version, you must ensure that any libraries you are using are current. If libraries have interdependencies, they also must be updated.
+How to add a library to the runtime global scope
+Legacy JavaScript libraries that are not imported into an app can be added to the runtime global scope and loaded as if they were in a script tag. You have to configure the CLI to do this at build time using the "scripts" and "styles" options of the build target in the CLI configuration file, angular.json.
+
+For example, to use the Bootstrap 4 library, first install the library and its dependencies using the npm package manager:
+
+npm install bootstrap --save
+Add the Bootstrap CSS file to the "styles" array:
+
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.css",
+  "src/styles.css"
+],
+Creating new libraries
+You can create and publish your own new libraries to extend Angular functionalities. It is generally used when you need to solve the same problem in more than one app (or want to share your solution with other developers), you have a candidate for a library.
+
+For example: You can create a button that sends users to your company website that would be included in all apps that your company builds.
+
+
+Open Angular CLI and use the following syntax to create a new library.
+
+Syntax
+ng generate library my-lib
+This will create a projects/my-lib folder in your workspace, which contains a component and a service inside an NgModule. The workspace configuration file, angular.json, is updated with a project of type 'library'.
+
+"projects": {
+  ...
+  "my-lib": {
+    "root": "projects/my-lib",
+    "sourceRoot": "projects/my-lib/src",
+    "projectType": "library",
+    "prefix": "lib",
+    "architect": {
+      "build": {
+        "builder": "@angular-devkit/build-ng-packagr:build",
+        ...
+Now, you can built, test and lint your project using the following commands:
+
+
+ng build my-lib
+ng test my-lib
+ng lint my-lib
+
