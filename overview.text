@@ -137,3 +137,11 @@ ng build my-lib
 ng test my-lib
 ng lint my-lib
 
+/////////////
+publishing library
+Verdaccio tutorial - local private npm registry
+//
+Verdaccio is a simple local private npm registry. Verdaccio is really helpful for developing custom  npm packages and testing them in local machines. Here we look at how we can create npm package from angular library(ng-packagr). We also look how we can configure verdaccio.
+
+During verdaccio installation, it will ask for Python installation.It will be better to install python, verdaccio will work even if you dont install python.
+
